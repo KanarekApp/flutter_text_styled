@@ -18,6 +18,7 @@ RegExp _closeTagRegExp = RegExp(r'\[\/[b|i|u]\]|(\[\/color\])|(\[\/a\])');
 
 class TextStyled {
   final TextStyle textStyle;
+  final TextAlign textAlign;
 
   String? _remainingText;
   int? _startStyledTextIndex;
@@ -44,7 +45,10 @@ class TextStyled {
 
   static const REPLACEMENT_EMPTY_TAG = "";
 
-  TextStyled({this.textStyle = const TextStyle()});
+  TextStyled({
+    this.textStyle = const TextStyle(),
+    this.textAlign = TextAlign.left,
+  });
 
   RichText getRichText(String text) {
     List<TextSpan> resultTextSpans = [];
@@ -58,6 +62,7 @@ class TextStyled {
       _handleNextTag(openTagIndex, closeTagIndex, resultTextSpans);
     }
     return RichText(
+        textAlign: textAlign,
         text: TextSpan(style: textStyle, children: resultTextSpans));
   }
 
